@@ -1,7 +1,7 @@
 const testMissing = async () => {
     try {
         const res = await fetch(
-            'https://hospital-management-system-dxf5.onrender.com/api/auth/register',
+            'https://hospital-management-yo63.onrender.com/api/auth/register',
             {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
