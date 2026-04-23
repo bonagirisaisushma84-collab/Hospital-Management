@@ -107,7 +107,14 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
     try {
+        console.log("REQ BODY:", req.body); // 👈 DEBUG
+
         let { email, password } = req.body;
+
+        // ✅ FIX: validate BEFORE using
+        if (!email || !password) {
+            return res.status(400).json({ msg: "Email and password required" });
+        }
 
         email = email.trim().toLowerCase();
 
@@ -125,7 +132,7 @@ const login = async (req, res) => {
 
         const token = jwt.sign(
             { id: user._id, role: user.role },
-            "12345",
+            process.env.JWT_SECRET || "12345", // ✅ TEMP fallback
             { expiresIn: "1h" }
         );
 
@@ -140,7 +147,7 @@ const login = async (req, res) => {
         });
 
     } catch (err) {
-        console.error("Login error:", err);
+        console.error("🔥 LOGIN ERROR:", err); // 👈 IMPORTANT
         res.status(500).json({ msg: "Server Error" });
     }
 };
